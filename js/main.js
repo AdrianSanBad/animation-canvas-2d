@@ -21,9 +21,15 @@ class Circle {
         this.color = color; // Color del circulo
         this.texto = texto; // Texto del circulo
         this.speed = speed; // Velocidad del circulo
-        this.dx = (1 * this.speed)+.5; // Velocidad en x
-        this.dy = (1 * this.speed)+.5; // Velocidad en y
+        this.dx = this.getRandomDirection() * this.speed; // Velocidad en x
+        this.dy = this.getRandomDirection() * this.speed; // Velocidad en y
     }
+    
+    // Método para obtener una dirección aleatoria (-1 o 1)
+    getRandomDirection() {
+        return Math.random() < 0.5 ? -1 : 1;
+    }
+
     // Metodo que dibuja el circulo
     dibujar(context) {
         context.beginPath(); // Iniciar el dibujo
@@ -36,23 +42,24 @@ class Circle {
         context.fillText(this.texto, this.x, this.y); // Escribir el texto
         context.closePath(); // Finalizar el dibujo
     }
+    
     update(context) {
         this.dibujar(context); // Dibujar el círculo
         if (this.x + this.radio > window_width) {
             // Si el circulo llega al borde derecho
-            this.dx = -this.dx; // Cambiar la dirección de movimiento en x a la izquierda
+            this.dx = -Math.abs(this.dx); // Cambiar la dirección de movimiento en x a la izquierda
         }
         if (this.x - this.radio < 0) {
             // Si el circulo llega al borde izquierdo
-            this.dx = -this.dx; // Cambiar la dirección de movimiento en x a la derecha
+            this.dx = Math.abs(this.dx); // Cambiar la dirección de movimiento en x a la derecha
         }
         if (this.y + this.radio > window_height) {
             // Si el circulo llega al borde inferior
-            this.dy = -this.dy; // Cambiar la dirección de movimiento en y hacia arriba
+            this.dy = -Math.abs(this.dy); // Cambiar la dirección de movimiento en y hacia arriba
         }
         if (this.y - this.radio < 0) {
             // Si el circulo llega al borde superior
-            this.dy = -this.dy; // Cambiar la dirección de movimiento en y hacia abajo
+            this.dy = Math.abs(this.dy); // Cambiar la dirección de movimiento en y hacia abajo
         }
         this.x += this.dx; // Actualizar la posición en x
         this.y += this.dy; // Actualizar la posición en y
@@ -70,12 +77,12 @@ let circles = []; // Array para almacenar los círculos
 const circleCount = 5; // Cantidad de círculos
 for (let i = 0; i < circleCount; i++) {
     let newCircle = new Circle(
-        getRandomNumber(100, window_width-100),
-        getRandomNumber(100, window_height-100),
+        getRandomNumber(100, window_width - 100),
+        getRandomNumber(100, window_height - 100),
         50,
         `rgb(${getRandomNumber(0, 255)}, ${getRandomNumber(0, 255)}, ${getRandomNumber(0, 255)})`, // Color aleatorio
         `Tec${i + 1}`, // Texto único
-        3
+        getRandomNumber(2, 5) // Velocidad aleatoria entre 2 y 5
     );
     circles.push(newCircle);
 }
