@@ -21,8 +21,8 @@ class Circle {
         this.color = color; // Color del circulo
         this.texto = texto; // Texto del circulo
         this.speed = speed; // Velocidad del circulo
-        this.dx = 1 * this.speed; // Velocidad en x
-        this.dy = 1 * this.speed; // Velocidad en y
+        this.dx = (1 * this.speed)+.5; // Velocidad en x
+        this.dy = (1 * this.speed)+.5; // Velocidad en y
     }
     // Metodo que dibuja el circulo
     dibujar(context) {
@@ -70,8 +70,8 @@ let circles = []; // Array para almacenar los círculos
 const circleCount = 5; // Cantidad de círculos
 for (let i = 0; i < circleCount; i++) {
     let newCircle = new Circle(
-        getRandomNumber(0, window_width),
-        getRandomNumber(0, window_height),
+        getRandomNumber(100, window_width-100),
+        getRandomNumber(100, window_height-100),
         50,
         `rgb(${getRandomNumber(0, 255)}, ${getRandomNumber(0, 255)}, ${getRandomNumber(0, 255)})`, // Color aleatorio
         `Tec${i + 1}`, // Texto único
